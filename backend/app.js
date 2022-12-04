@@ -5,6 +5,7 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const { ValidationError } = require('sequelize');
 
 /*will be true if the environment is in production or not
 checking the environment key in the configuration file*/
@@ -47,5 +48,24 @@ if (!isProduction) {
   );
 
   app.use(routes);
+
+  // Catch unhandled requests and forward to error handler.
+app.use((_req, _res, next) => {
+  const err = new Error("The requested resource couldn't be found.");
+  err.title = "Resource Not Found";
+  err.errors = ["The requested resource couldn't be found."];
+  err.status = 404;
+  next(err);
+});
+
+// Process sequelize errors
+app.use((err, _req, _res, next) => {
+  // check if error is a Sequelize error:
+  if (err instanceof ValidationError) {
+    err.errors = err.errors.map((e) => e.message);
+    err.title = 'Validation error';
+  }
+  next(err);
+});
 
   module.exports = app;
