@@ -18,6 +18,10 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+const routes = require('./routes');
+
+
+
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
@@ -41,3 +45,7 @@ if (!isProduction) {
       }
     })
   );
+
+  app.use(routes);
+
+  module.exports = app;
