@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Tweet.belongsTo(models.User, {foreignKey: 'user_id'})
     }
+
     // static async post(media, message, user_id){
     //   if(media !== null || message !== null){
     //     const tweet = await Tweet.create({
@@ -40,7 +41,12 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: "Tweet"
+    modelName: 'Tweet',
+    defaultScope: {
+      attributes: {
+        exclude: ["UserId" ]
+      }
+    }
   });
   return Tweet;
 };
