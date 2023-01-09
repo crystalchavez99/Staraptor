@@ -1,3 +1,5 @@
+'use strict';
+/** @type {import('sequelize-cli').Migration} */
 "use strict";
 
 let options = {};
@@ -6,34 +8,24 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Tweets', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
-        type: Sequelize.STRING(30),
-        allowNull: false
+      media: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
-      lastname: {
-        type: Sequelize.STRING(30),
-        allowNull: false
+      message: {
+        type: Sequelize.STRING(500),
+        allowNull: true
       },
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {
@@ -46,9 +38,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, options);
+    });
   },
-  down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users', options);
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Tweets', options);
   }
 };
