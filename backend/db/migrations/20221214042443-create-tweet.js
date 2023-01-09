@@ -1,5 +1,12 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+"use strict";
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Tweets', {
@@ -10,16 +17,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       media: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
       },
       message: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
+        allowNull: true
       },
       user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {model: 'Users'},
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -28,11 +35,12 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tweets');
+    await queryInterface.dropTable('Tweets', options);
   }
 };

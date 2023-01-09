@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Tweet extends Model {
     /**
@@ -9,20 +7,40 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    toSafeObject(){
+      const { id, media, message, user_id } = this; // context will be the User instance
+      return { id, media, message, user_id  };
+    }
     static associate(models) {
       // define association here
       Tweet.belongsTo(models.User, {foreignKey: 'user_id'})
-
     }
-    
+    // static async post(media, message, user_id){
+    //   if(media !== null || message !== null){
+    //     const tweet = await Tweet.create({
+    //       media, message, user_id
+    //     })
+    //     return tweet;
+    //   }
+    // }
+
   }
   Tweet.init({
-    media: DataTypes.STRING,
-    message: DataTypes.STRING,
+    media: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    message: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [1, 500],
+      }
+    },
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Tweet',
+    modelName: "Tweet"
   });
   return Tweet;
 };
