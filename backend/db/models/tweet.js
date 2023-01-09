@@ -16,14 +16,15 @@ module.exports = (sequelize, DataTypes) => {
       Tweet.belongsTo(models.User, {foreignKey: 'user_id'})
     }
 
-    // static async post(media, message, user_id){
-    //   if(media !== null || message !== null){
-    //     const tweet = await Tweet.create({
-    //       media, message, user_id
-    //     })
-    //     return tweet;
-    //   }
-    // }
+    static async post({media, message, user_id}){
+      console.log(media, message, user_id)
+      if(media !== null || message !== null){
+        const tweet = await Tweet.create({
+          media, message, user_id
+        })
+        return tweet;
+      }
+    }
 
   }
   Tweet.init({
