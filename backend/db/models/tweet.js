@@ -40,7 +40,12 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: "Tweet"
+    modelName: "Tweet",
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"]
+      }
+    },
   });
   return Tweet;
 };
