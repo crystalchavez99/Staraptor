@@ -1,12 +1,12 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize)=>  {
     await queryInterface.createTable('Tweets', {
       id: {
         allowNull: false,
@@ -38,7 +38,7 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  down: async(queryInterface, Sequelize) => {
     await queryInterface.dropTable('Tweets', options);
   }
 };

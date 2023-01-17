@@ -37,7 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 500],
       }
     },
-    user_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
   }, {
     sequelize,
     modelName: "Tweet",
