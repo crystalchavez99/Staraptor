@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     static associate(models) {
       // define association here
-      //User.hasMany(models.Tweet, {foreignkey : 'user_id', onDelete: 'CASCADE'})
+      User.hasMany(models.Tweet, {foreignkey : 'user_id', onDelete: 'CASCADE'})
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
