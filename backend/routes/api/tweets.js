@@ -8,8 +8,9 @@ router.get('/', async(req,res) =>{
     return res.json({tweets})
 })
 
-router.post('/', async(req,res,next) =>{
-    const {media, message,user_id} = req.body;
+router.post('/', requireAuth, async(req,res,next) =>{
+    const {media, message} = req.body;
+    const user_id = req.user.id;
     const tweet = await Tweet.post({media, message,user_id});
     return res.json({tweet})
 } )
