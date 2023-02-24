@@ -31,7 +31,6 @@ function LoginFormPage() {
         dispatch(login({ credential, password }))
         .catch(async res =>{
         const data = await res.json();
-        console.log("found errors", data)
         if (data && data.errors) {
             setErrors(data.errors)
         }else{
@@ -61,7 +60,7 @@ function LoginFormPage() {
                     value={credential}
                     onChange={e => setCredential(e.target.value)}
                     placeholder="Enter your credential"
-                    
+
                 >
                 </input>
                 <label>

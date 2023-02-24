@@ -1,6 +1,7 @@
 import LoginFormPage from "./components/LoginFormPage";
 import React from "react";
 import { Route, Switch } from "react-router";
+import SignupFormPage from "./components/SignupFormPage";
 
 function App() {
   return (
@@ -9,6 +10,9 @@ function App() {
     <Switch>
       <Route exact path="/login">
         <LoginFormPage />
+      </Route>
+      <Route exact path="/signup">
+        <SignupFormPage />
       </Route>
     </Switch>
     </div>
